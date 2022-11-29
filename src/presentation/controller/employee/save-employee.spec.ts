@@ -1,6 +1,6 @@
 import { EmployeeModel } from "../../../domain/models/employee";
 import { AddEmployee, AddEmployeeModel } from "../../../domain/usecases/add-employee";
-import { MissingParamError } from "../../errors";
+import { MissingParamError, ServerError } from "../../errors";
 import { SaveEmployeeController } from "./save-employee";
 
 interface SutType {
@@ -98,5 +98,26 @@ describe('SaveEmployee Controller', () => {
          age: 26,
          role: 'developer'
       });
+   })
+
+   test('Should return 500 if AddEmployee throws', async () => {
+      const { sut, addEmployeeStub } = makeSut();
+
+      jest.spyOn(addEmployeeStub, 'add').mockImplementationOnce(() => {
+         return new Promise((resolve, reject) => reject(new Error()))
+      });
+
+      const httpRequest = {
+         body: {
+            name: 'John Doe',
+            age: 26,
+            role: 'developer'
+         }
+      }
+
+      const httpResponse = await sut.handle(httpRequest);
+
+      expect(httpResponse.statusCode).toBe(500);
+      expect(httpResponse.body).toEqual(new ServerError());
    })
 })
