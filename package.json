@@ -5,8 +5,9 @@
   "author": "Leonardo <leonardomf1996@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest --passWithNoTests --watch",
-    "test:staged": "jest --passWithNoTests"
+    "test": "jest --passWithNoTests --silent --noStackTrace -- runInBand",
+    "test:staged": "jest --passWithNoTests",
+    "test:unit": "npm test -- --watch"
   },
   "devDependencies": {
     "@types/jest": "^29.2.3",
