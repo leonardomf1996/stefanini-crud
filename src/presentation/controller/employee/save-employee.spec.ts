@@ -1,13 +1,32 @@
+import { EmployeeModel } from "../../../domain/models/employee";
+import { AddEmployee, AddEmployeeModel } from "../../../domain/usecases/add-employee";
 import { MissingParamError } from "../../errors";
 import { SaveEmployeeController } from "./save-employee";
 
 interface SutType {
    sut: SaveEmployeeController;
+   addEmployeeStub: AddEmployee;
+}
+
+const makeAddEmployee = (): AddEmployee => {
+   class AddEmployeeStub implements AddEmployee {
+      async add(employee: AddEmployeeModel): Promise<EmployeeModel> {
+         const fakeEmployee = {
+            id: 'valid_id',
+            name: 'valid_name',
+            age: 'valid_age',
+            role: 'valid_role',
+         }
+         return new Promise(resolve => resolve(fakeEmployee));
+      }
+   }
+   return new AddEmployeeStub();
 }
 
 const makeSut = (): SutType => {
-   const sut = new SaveEmployeeController();
-   return { sut };
+   const addEmployeeStub = makeAddEmployee();
+   const sut = new SaveEmployeeController(addEmployeeStub);
+   return { sut, addEmployeeStub };
 }
 
 describe('SaveEmployee Controller', () => {
@@ -57,5 +76,27 @@ describe('SaveEmployee Controller', () => {
 
       expect(httpResponse.statusCode).toBe(400);
       expect(httpResponse.body).toEqual(new MissingParamError('role'));
+   })
+
+   test('Should call AddEmployee with correct values', async () => {
+      const { sut, addEmployeeStub } = makeSut();
+
+      const saveSpy = jest.spyOn(addEmployeeStub, 'add');
+
+      const httpRequest = {
+         body: {
+            name: 'John Doe',
+            age: 26,
+            role: 'developer'
+         }
+      }
+
+      await sut.handle(httpRequest);
+
+      expect(saveSpy).toHaveBeenCalledWith({
+         name: 'John Doe',
+         age: 26,
+         role: 'developer'
+      });
    })
 })
