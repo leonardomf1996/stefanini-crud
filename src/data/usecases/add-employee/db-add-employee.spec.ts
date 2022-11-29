@@ -50,4 +50,22 @@ describe('DbAddAccount use case', () => {
       })
    });
 
+   test('should return an employee if on success', async () => {
+      const { sut } = makeSut();
+
+      const employeeData = {
+         name: 'valid_name',
+         age: 'valid_age',
+         role: 'valid_role',
+      };
+
+      const account = await sut.add(employeeData);
+
+      expect(account).toEqual({
+         id: 'valid_id',
+         name: 'valid_name',
+         age: 'valid_age',
+         role: 'valid_role',
+      });
+   });
 });
