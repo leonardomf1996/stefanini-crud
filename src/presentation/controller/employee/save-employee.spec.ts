@@ -17,4 +17,20 @@ describe('SaveEmployee Controller', () => {
       expect(httpResponse.statusCode).toBe(400);
       expect(httpResponse.body).toEqual(new MissingParamError('name'));
    })
+
+   test('Should return 400 if no age is provided', async () => {
+      const sut = new SaveEmployeeController();
+
+      const httpRequest = {
+         body: {
+            name: 'John Doe',
+            role: 'developer'
+         }
+      }
+
+      const httpResponse = await sut.handle(httpRequest);
+
+      expect(httpResponse.statusCode).toBe(400);
+      expect(httpResponse.body).toEqual(new MissingParamError('age'));
+   })
 })
