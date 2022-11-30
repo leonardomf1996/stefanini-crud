@@ -72,4 +72,19 @@ describe('DeketeEmployee Controller', () => {
       expect(httpResponse.statusCode).toBe(500);
       expect(httpResponse.body).toEqual(new ServerError());
    })
+
+   test('Should return 204 if valid data is provided', async () => {
+      const { sut } = makeSut();
+
+      const httpRequest = {
+         params: {
+            id: 'valid_id'
+         }
+      };
+
+      const httpResponse = await sut.handle(httpRequest);
+
+      expect(httpResponse.statusCode).toBe(204);
+      expect(httpResponse.body).toEqual(null);
+   })
 })
