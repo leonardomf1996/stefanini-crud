@@ -73,4 +73,13 @@ describe('DblistEmployees use case', () => {
          }
       ]);
    });
+
+   test('should return null if not exists employee', async () => {
+      const { sutList } = makeSut();
+
+      const employees = await sutList.list();
+      employees.shift();
+      
+      expect(employees).toEqual([]);
+   });
 });
