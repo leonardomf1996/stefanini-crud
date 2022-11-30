@@ -1,5 +1,5 @@
 import { DeleteEmployee, DeleteEmployeeModel } from "../../../domain/usecases/delete-employee";
-import { MissingParamError } from "../../errors";
+import { MissingParamError, ServerError } from "../../errors";
 import { DeleteEmployeeController } from "./delete-employee";
 
 interface SutType {
@@ -52,5 +52,24 @@ describe('DeketeEmployee Controller', () => {
       expect(deleteSpy).toHaveBeenCalledWith({
          id: 'valid_id'
       });
+   })
+
+   test('Should return 500 if DeleteEmployee throws', async () => {
+      const { sut, deleteEmployeeStub } = makeSut();
+
+      jest.spyOn(deleteEmployeeStub, 'delete').mockImplementationOnce(() => {
+         return new Promise((resolve, reject) => reject(new Error()))
+      });
+
+      const httpRequest = {
+         params: {
+            id: 'valid_id'
+         }
+      }
+
+      const httpResponse = await sut.handle(httpRequest);
+
+      expect(httpResponse.statusCode).toBe(500);
+      expect(httpResponse.body).toEqual(new ServerError());
    })
 })
