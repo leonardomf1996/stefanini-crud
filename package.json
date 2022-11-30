@@ -5,6 +5,7 @@
   "author": "Leonardo <leonardomf1996@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "test:simple": "jest",
     "test": "jest --passWithNoTests --silent --noStackTrace -- runInBand",
     "test:staged": "jest --passWithNoTests",
     "test:unit": "npm test -- --watch"
