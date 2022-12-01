@@ -8,4 +8,12 @@
  7. Os recuros podem ser provisionados por serveless framework ou terraform
  8. Realizar testes unitário com JEST
 
- docker run -d -p 27017:27017 -p 28017:28017 -e MONGODB_PASS="mongo" mongo
+## Como usar
+1. Com o docker instalado e iniciado, inserir no terminal
+`docker run -d -p 27017:27017 -p 28017:28017 -e MONGODB_PASS="mongo" mongo`
+2. Inicializar a aplicação com `yarn start` ou `npm run start`
+
+## Endpoints criados:
+- GET employees
+- POST employee
+- GET employee
