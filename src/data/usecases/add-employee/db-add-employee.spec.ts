@@ -1,13 +1,21 @@
-import { AddEmployee, AddEmployeeModel, AddEmployeeRepository, EmployeeModel } from "./db-add-employee-protocols";
+import { AddEmployeeModel, EmployeeRepository, EmployeeModel } from "./db-add-employee-protocols";
 import { DbAddEmployee } from "./db-add-employee";
+import { DeleteEmployeeModel } from "../../../domain/usecases/delete-employee";
+import { ListEmployeesModel } from "../../../domain/usecases/list-employees";
 
 interface SutTypes {
    sut: DbAddEmployee;
-   addEmployeeRepositoryStub: AddEmployeeRepository;
+   addEmployeeRepositoryStub: EmployeeRepository;
 }
 
-const makeAddEmployeeRepository = (): AddEmployeeRepository => {
-   class AddEmployeeRepositoryStub implements AddEmployeeRepository {
+const makeAddEmployeeRepository = (): EmployeeRepository => {
+   class AddEmployeeRepositoryStub implements EmployeeRepository {
+      list(): Promise<ListEmployeesModel[]> {
+         throw new Error("Method not implemented.");
+      }
+      delete(employeeData: DeleteEmployeeModel): Promise<void> {
+         throw new Error("Method not implemented.");
+      }
       async add(employeeData: AddEmployeeModel): Promise<EmployeeModel> {
          const fakeEmployee = {
             id: 'valid_id',

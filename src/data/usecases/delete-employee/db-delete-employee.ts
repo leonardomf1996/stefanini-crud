@@ -1,9 +1,9 @@
 import { DeleteEmployee, DeleteEmployeeModel } from "../../../domain/usecases/delete-employee";
-import { DeleteEmployeeRepository } from "../../protocols/delete-employee-repository";
+import { EmployeeRepository } from "../../protocols/employee-repository";
 
 export class DbDeleteEmployee implements DeleteEmployee {
    constructor(
-      private readonly deleteEmployeeRepository: DeleteEmployeeRepository,
+      private readonly deleteEmployeeRepository: EmployeeRepository,
    ) { }
 
    async delete(employee: DeleteEmployeeModel): Promise<void> {

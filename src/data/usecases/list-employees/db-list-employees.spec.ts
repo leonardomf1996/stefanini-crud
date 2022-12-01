@@ -1,19 +1,26 @@
 import { EmployeeModel } from "../../../domain/models/employee";
 import { AddEmployeeModel } from "../../../domain/usecases/add-employee";
-import { ListEmployeesRepository } from "../../protocols/list-employees-repository";
+import { DeleteEmployeeModel } from "../../../domain/usecases/delete-employee";
+import { ListEmployeesModel } from "../../../domain/usecases/list-employees";
+import { EmployeeRepository } from "../../protocols/employee-repository";
 import { DbAddEmployee } from "../add-employee/db-add-employee";
-import { AddEmployeeRepository } from "../add-employee/db-add-employee-protocols";
 import { DbListEmployees } from "./db-list-employees";
 
 interface SutTypes {
    sut: DbAddEmployee;
-   addEmployeeRepositoryStub: AddEmployeeRepository;
+   addEmployeeRepositoryStub: EmployeeRepository;
    sutList: DbListEmployees;
-   listEmployeesRepositoryStub: ListEmployeesRepository;
+   listEmployeesRepositoryStub: EmployeeRepository;
 }
 
-const makeAddEmployeeRepository = (): AddEmployeeRepository => {
-   class AddEmployeeRepositoryStub implements AddEmployeeRepository {
+const makeAddEmployeeRepository = (): EmployeeRepository => {
+   class AddEmployeeRepositoryStub implements EmployeeRepository {
+      list(): Promise<ListEmployeesModel[]> {
+         throw new Error("Method not implemented.");
+      }
+      delete(employeeData: DeleteEmployeeModel): Promise<void> {
+         throw new Error("Method not implemented.");
+      }
       async add(employeeData: AddEmployeeModel): Promise<EmployeeModel> {
          const fakeEmployee = {
             id: 'valid_id',
@@ -28,8 +35,14 @@ const makeAddEmployeeRepository = (): AddEmployeeRepository => {
    return new AddEmployeeRepositoryStub();
 }
 
-const makeListEmployeesRepository = (): ListEmployeesRepository => {
-   class ListEmployeesRepositoryStub implements ListEmployeesRepository {
+const makeListEmployeesRepository = (): EmployeeRepository => {
+   class ListEmployeesRepositoryStub implements EmployeeRepository {
+      add(accountData: AddEmployeeModel): Promise<EmployeeModel> {
+         throw new Error("Method not implemented.");
+      }
+      delete(employeeData: DeleteEmployeeModel): Promise<void> {
+         throw new Error("Method not implemented.");
+      }
       async list(): Promise<Array<EmployeeModel> | null> {
          return new Promise(resolve => resolve([
             {

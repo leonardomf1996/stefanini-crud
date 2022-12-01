@@ -1,14 +1,22 @@
 import { DeleteEmployeeModel } from "../../../domain/usecases/delete-employee";
-import { DeleteEmployeeRepository } from "../../protocols/delete-employee-repository";
+import { ListEmployeesModel } from "../../../domain/usecases/list-employees";
+import { EmployeeRepository } from "../../protocols/employee-repository";
+import { AddEmployeeModel, EmployeeModel } from "../add-employee/db-add-employee-protocols";
 import { DbDeleteEmployee } from "./db-delete-employee";
 
 interface SutTypes {
    sut: DbDeleteEmployee;
-   deleteEmployeeRepositoryStub: DeleteEmployeeRepository;
+   deleteEmployeeRepositoryStub: EmployeeRepository;
 }
 
-const makeDeleteEmployeeRepository = (): DeleteEmployeeRepository => {
-   class DeleteEmployeeRepositoryStub implements DeleteEmployeeRepository {
+const makeDeleteEmployeeRepository = (): EmployeeRepository => {
+   class DeleteEmployeeRepositoryStub implements EmployeeRepository {
+      add(accountData: AddEmployeeModel): Promise<EmployeeModel> {
+         throw new Error("Method not implemented.");
+      }
+      list(): Promise<ListEmployeesModel[]> {
+         throw new Error("Method not implemented.");
+      }
       async delete(employeeData: DeleteEmployeeModel): Promise<void> {
          return new Promise(resolve => resolve(null))
       }

@@ -1,10 +1,10 @@
 import { EmployeeModel } from '../../../domain/models/employee';
 import { ListEmployees } from '../../../domain/usecases/list-employees';
-import { ListEmployeesRepository } from '../../protocols/list-employees-repository';
+import { EmployeeRepository } from '../../protocols/employee-repository';
 
 export class DbListEmployees implements ListEmployees {
    constructor(
-      private readonly listEmployeesRepository: ListEmployeesRepository,
+      private readonly listEmployeesRepository: EmployeeRepository,
    ) { }
 
    async list(): Promise<Array<EmployeeModel> | null> {

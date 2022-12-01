@@ -1,8 +1,8 @@
-import { AddEmployee, AddEmployeeModel, AddEmployeeRepository, EmployeeModel } from './db-add-employee-protocols';
+import { AddEmployee, AddEmployeeModel, EmployeeRepository, EmployeeModel } from './db-add-employee-protocols';
 
 export class DbAddEmployee implements AddEmployee {
    constructor(
-      private readonly addEmployeeRepository: AddEmployeeRepository,
+      private readonly addEmployeeRepository: EmployeeRepository,
    ) { }
 
    async add(employee: AddEmployeeModel): Promise<EmployeeModel> {
