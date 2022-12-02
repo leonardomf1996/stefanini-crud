@@ -9,9 +9,10 @@
  8. Realizar testes unitário com JEST
 
 ## Como usar
-1. Com o docker instalado e iniciado, inserir no terminal
+1. Instale as dependências com `yarn` ou `npm install`
+2. Com o docker instalado e iniciado, inserir no terminal
 `docker run -d -p 27017:27017 -p 28017:28017 -e MONGODB_PASS="mongo" mongo`
-2. Inicializar a aplicação com `yarn start` ou `npm run start`
+3. Inicializar a aplicação com `yarn start` ou `npm run start`
 
 ## Endpoints criados:
 - GET employees `http://localhost:5050/api/employee`
