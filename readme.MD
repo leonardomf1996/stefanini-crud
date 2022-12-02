@@ -14,6 +14,6 @@
 2. Inicializar a aplicação com `yarn start` ou `npm run start`
 
 ## Endpoints criados:
-- GET employees
-- POST employee
-- GET employee
+- GET employees `http://localhost:5050/api/employee`
+- POST employee `http://localhost:5050/api/employee`
+- DELETE employee `http://localhost:5050/api/employee/:id`
